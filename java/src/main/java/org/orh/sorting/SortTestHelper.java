@@ -1,6 +1,7 @@
 package org.orh.sorting;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.orh.sorting.basic.ext.SelectionSortObject;
@@ -13,11 +14,6 @@ public class SortTestHelper {
 
     /**
      * 随机生成指定长度的整数数组 [rangeL, rangeR]
-     * 
-     * @param size 需要生成的元素个数
-     * @param rangeL 区间开始值
-     * @param rangeR 区间结束值
-     * @return
      */
     public static Integer[] generateRandomArray(int size, int rangeL, int rangeR) {
         // 注意 assert 是需要 jvm 参数 开关-enableassertions或-ea来开启的
@@ -35,6 +31,27 @@ public class SortTestHelper {
     }
 
     // 可以fork/join 分段 来优化大数组的初始化
+    
+    /**
+     * 产生一个接近有序的数组  - 主要体现 “插入排序/优化的插入排序” 对接近有序数组提前退出循环的优势
+     */
+    public static Integer[] generateNearOrderedArray(int size, int swapTimes) {
+        Integer[] arr = new Integer[size];
+        // 所有元素有序
+        for (int i = 0; i < size; i++) {
+            arr[i] = i;
+        }
+        
+        // 挑选 一些进行交换
+        for (int i = 0; i < swapTimes; i++) {
+            int posX = (int) (Math.random() * size);
+            int posY = (int) (Math.random() * size);
+            Integer tmp = arr[posX];
+            arr[posX] = arr[posY];
+            arr[posY] = tmp;
+        }
+        return arr;
+    }
 
     /**
      * 测试排序
@@ -52,7 +69,7 @@ public class SortTestHelper {
 
         Duration consumptionTime = Duration.ofMillis(end - start); // 便于单位转换，虽然暂时没用到转换
 
-        System.out.printf("%-20s: sort %d elements take %d ms\n", sortName, arr.length, consumptionTime.toMillis());
+        System.out.printf("%-28s: sort %d elements take %d ms\n", sortName, arr.length, consumptionTime.toMillis());
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -67,5 +84,6 @@ public class SortTestHelper {
 
     public static void main(String[] args) {
         SortTestHelper.testSort("SelectionSort", SelectionSortObject::sort, SortTestHelper.generateRandomArray(1000, 0, 100));
+        System.out.println(Arrays.toString(generateNearOrderedArray(10, 2)));
     }
 }
