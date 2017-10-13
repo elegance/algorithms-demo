@@ -18,7 +18,7 @@ public class InsertionSort {
             for (int j = i; j > 0; j--) { // 往前比较
                 if (arr[j].compareTo(arr[j - 1]) < 0) { // 挨个往前比，比前者小则交换
                     swap(arr, j, j - 1);
-                }
+                } else { break;}
             }
         }
     }
