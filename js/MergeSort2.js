@@ -33,19 +33,19 @@ function merge(arr, l, mid, r) {
 
     do{
         if (j >= mid-l+1) { // j >=  left.length，取 右端数组的值
-            arr[l+i] = aux[l+k+r];
+            arr[l+i] = aux[mid-l+k+1];
             // console.log('debug 1', arra);
             k++;
         } else if(k >= r-mid) { // k > = right.length 取左端数组值
             arr[l+i] = aux[j];
             // console.log('debug 2', arr);
             j++;
-        } else if (aux[j] < aux[l+k+r]) {
+        } else if (aux[j] < aux[mid-l+k+1]) {
             arr[l+i] = aux[j];
             // console.log('debug 3', arr);
             j++;
         } else {
-            arr[l+i] = aux[l+k+r];
+            arr[l+i] = aux[mid-l+k+1];
             // console.log('debug 4', arr);
             k++;
         }
