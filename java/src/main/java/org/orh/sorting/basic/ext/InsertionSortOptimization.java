@@ -25,6 +25,18 @@ public class InsertionSortOptimization {
         }
     }
 
+    public static void sort(Comparable[] arr, int l, int r) {
+        for (int i = l + 1; i <= r; i++) {
+            Comparable c = arr[i];
+            int j = i;
+
+            for (; j > l && c.compareTo(arr[j - 1]) < 0; j--) {
+                arr[j] = arr[j - 1]; // 元素往后挪一位 - 即一次赋值
+            }
+            arr[j] = c;
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] arr = SortTestHelper.generateRandomArray(20000, 0, 3);
         Integer[] isArr = Arrays.copyOf(arr, arr.length);
@@ -41,5 +53,9 @@ public class InsertionSortOptimization {
         SortTestHelper.testSort("InsertionSortOptimization", InsertionSortOptimization::sort, nearOrdedArr);
         SortTestHelper.testSort("InsertionSort", InsertionSort::sort, isArr2);
         SortTestHelper.testSort("SelectionSort", SelectionSortObject::sort, seArr2);
+
+        Integer[] arr2 = {5, 4, 3, 2, 1};
+        sort(arr2, 2, 3);
+        System.out.println(Arrays.toString(arr2));
     }
 }
