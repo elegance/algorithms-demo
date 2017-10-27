@@ -30,6 +30,16 @@ public class SortTestHelper {
         return arr;
     }
 
+    public static int[] generateRandomIntArray(int size, int lower, int upper) {
+        int[] arr = new int[size];
+        int choices = upper - lower + 1;
+
+        for (int i = 0; i < size; i++) {
+            arr[i] = (int) (Math.random() * choices + lower);
+        }
+        return arr;
+    }
+
     // 可以fork/join 分段 来优化大数组的初始化
     
     /**
@@ -56,8 +66,7 @@ public class SortTestHelper {
     /**
      * 测试排序
      * 
-     * @param consumer 因为排序方法是无返回值的，所以此处使用 Consumer<T>，如果有返回值可以使用 Function<T, R>
-     * @param arr
+     * @param sortFn 因为排序方法是无返回值的，所以此处使用 Consumer<T>，如果有返回值可以使用 Function<T, R>
      */
     @SuppressWarnings("rawtypes")
     public static void testSort(String sortName, Consumer<Comparable[]> sortFn, Comparable[] arr) {
