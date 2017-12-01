@@ -74,7 +74,7 @@ public class SortTestHelper {
         sortFn.accept(arr);
         long end = System.currentTimeMillis();
 
-        assert isSorted(arr);
+        assert isSorted(arr): "排序结果不正确！";
 
         Duration consumptionTime = Duration.ofMillis(end - start); // 便于单位转换，虽然暂时没用到转换
 
