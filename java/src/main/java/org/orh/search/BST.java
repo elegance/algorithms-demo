@@ -294,9 +294,11 @@ public class BST<K extends Comparable, V> {
                 node = node.right;
             } else {
                 // 找一个节点来替代当前要删除的节点
-                Node delNode = node;
-                Node successor = minimum(node.right); // 从右子树中找最小的节点来 替代 要删除的节点
-                successor.right = removeMin(node.right);
+                Node successor = minimum(node.right); // 保存后继节点
+                successor.right = removeMin(node.right); // 移除后继节点
+                count++; // 中和 removeMin 中的 “--”
+                successor.left = node.left;
+                node = successor; // 后继节点替代前驱节点
             }
             count--;
         } else if (rs > 0) { // 我比你大， 你去左边找吧
